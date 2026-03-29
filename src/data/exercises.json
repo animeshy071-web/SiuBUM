@@ -1,0 +1,583 @@
+[
+    {
+        "name": "Dumbbell Bench Press",
+        "muscle": "Chest",
+        "equipment": "dumbbell",
+        "sets": "4×8",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Fly",
+        "muscle": "Chest",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Incline Dumbbell Press",
+        "muscle": "Chest",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Crossover",
+        "muscle": "Chest",
+        "equipment": "cable",
+        "sets": "3×15",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Fly (Low)",
+        "muscle": "Chest",
+        "equipment": "cable",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Chest Press Machine",
+        "muscle": "Chest",
+        "equipment": "machine",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Pec Deck Machine",
+        "muscle": "Chest",
+        "equipment": "machine",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Push-Up",
+        "muscle": "Chest",
+        "equipment": "bodyweight",
+        "sets": "4×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Wide Push-Up",
+        "muscle": "Chest",
+        "equipment": "bodyweight",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Russian Twist",
+        "muscle": "Abs",
+        "equipment": "dumbbell",
+        "sets": "3×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell V-Up",
+        "muscle": "Abs",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Crunch",
+        "muscle": "Abs",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Ab Crunch Machine",
+        "muscle": "Abs",
+        "equipment": "machine",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Plank",
+        "muscle": "Abs",
+        "equipment": "bodyweight",
+        "sets": "3×60s",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Hanging Leg Raise",
+        "muscle": "Abs",
+        "equipment": "bodyweight",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Bicycle Crunch",
+        "muscle": "Abs",
+        "equipment": "bodyweight",
+        "sets": "3×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Shoulder Press",
+        "muscle": "Shoulders",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Lateral Raise",
+        "muscle": "Shoulders",
+        "equipment": "dumbbell",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Front Raise",
+        "muscle": "Shoulders",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Lateral Raise",
+        "muscle": "Shoulders",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Face Pull",
+        "muscle": "Shoulders",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Shoulder Press Machine",
+        "muscle": "Shoulders",
+        "equipment": "machine",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Pike Push-Up",
+        "muscle": "Shoulders",
+        "equipment": "bodyweight",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Handstand Push-Up",
+        "muscle": "Shoulders",
+        "equipment": "bodyweight",
+        "sets": "3×8",
+        "difficulty": "Advanced"
+    },
+    {
+        "name": "Dumbbell Curl",
+        "muscle": "Biceps",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Hammer Curl",
+        "muscle": "Biceps",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Curl",
+        "muscle": "Biceps",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Preacher Curl Machine",
+        "muscle": "Biceps",
+        "equipment": "machine",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Chin-Up",
+        "muscle": "Biceps",
+        "equipment": "bodyweight",
+        "sets": "4×8",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Wrist Curl",
+        "muscle": "Forearms",
+        "equipment": "dumbbell",
+        "sets": "4×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Farmer's Walk",
+        "muscle": "Forearms",
+        "equipment": "dumbbell",
+        "sets": "4×40m",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Wrist Curl",
+        "muscle": "Forearms",
+        "equipment": "cable",
+        "sets": "4×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dead Hang",
+        "muscle": "Forearms",
+        "equipment": "bodyweight",
+        "sets": "3×30s",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Shrug",
+        "muscle": "Traps",
+        "equipment": "dumbbell",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Upright Row",
+        "muscle": "Traps",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Face Pull",
+        "muscle": "Traps",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Shrug Machine",
+        "muscle": "Traps",
+        "equipment": "machine",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Row",
+        "muscle": "Upper Back",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Reverse Fly",
+        "muscle": "Upper Back",
+        "equipment": "dumbbell",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Reverse Fly",
+        "muscle": "Upper Back",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Rear Delt Machine",
+        "muscle": "Upper Back",
+        "equipment": "machine",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Bodyweight Row",
+        "muscle": "Upper Back",
+        "equipment": "bodyweight",
+        "sets": "3×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Pullover",
+        "muscle": "Lats",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Single-Arm Dumbbell Row",
+        "muscle": "Lats",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Lat Pulldown",
+        "muscle": "Lats",
+        "equipment": "cable",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Row",
+        "muscle": "Lats",
+        "equipment": "cable",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Lat Pulldown Machine",
+        "muscle": "Lats",
+        "equipment": "machine",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Seated Row Machine",
+        "muscle": "Lats",
+        "equipment": "machine",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Pull-Up",
+        "muscle": "Lats",
+        "equipment": "bodyweight",
+        "sets": "4×8",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Skull Crusher",
+        "muscle": "Triceps",
+        "equipment": "dumbbell",
+        "sets": "3×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Kickback",
+        "muscle": "Triceps",
+        "equipment": "dumbbell",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Pushdown",
+        "muscle": "Triceps",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Overhead Ext.",
+        "muscle": "Triceps",
+        "equipment": "cable",
+        "sets": "3×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Tricep Extension Machine",
+        "muscle": "Triceps",
+        "equipment": "machine",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Diamond Push-Up",
+        "muscle": "Triceps",
+        "equipment": "bodyweight",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Tricep Dip",
+        "muscle": "Triceps",
+        "equipment": "bodyweight",
+        "sets": "3×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Good Morning",
+        "muscle": "Lower Back",
+        "equipment": "dumbbell",
+        "sets": "3×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Romanian DL",
+        "muscle": "Lower Back",
+        "equipment": "dumbbell",
+        "sets": "4×8",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Pull-Through",
+        "muscle": "Lower Back",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Back Extension Machine",
+        "muscle": "Lower Back",
+        "equipment": "machine",
+        "sets": "3×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Superman Hold",
+        "muscle": "Lower Back",
+        "equipment": "bodyweight",
+        "sets": "4×30s",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Hip Thrust",
+        "muscle": "Glutes",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Sumo Squat",
+        "muscle": "Glutes",
+        "equipment": "dumbbell",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Kickback",
+        "muscle": "Glutes",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Glute Drive Machine",
+        "muscle": "Glutes",
+        "equipment": "machine",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Glute Bridge",
+        "muscle": "Glutes",
+        "equipment": "bodyweight",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Goblet Squat",
+        "muscle": "Quads",
+        "equipment": "dumbbell",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Dumbbell Lunge",
+        "muscle": "Quads",
+        "equipment": "dumbbell",
+        "sets": "3×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Leg Extension",
+        "muscle": "Quads",
+        "equipment": "cable",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Leg Extension Machine",
+        "muscle": "Quads",
+        "equipment": "machine",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Leg Press Machine",
+        "muscle": "Quads",
+        "equipment": "machine",
+        "sets": "4×10",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Bodyweight Squat",
+        "muscle": "Quads",
+        "equipment": "bodyweight",
+        "sets": "4×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Jump Squat",
+        "muscle": "Quads",
+        "equipment": "bodyweight",
+        "sets": "4×12",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Dumbbell Romanian DL",
+        "muscle": "Hamstrings",
+        "equipment": "dumbbell",
+        "sets": "4×8",
+        "difficulty": "Intermediate"
+    },
+    {
+        "name": "Cable Leg Curl",
+        "muscle": "Hamstrings",
+        "equipment": "cable",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Seated Leg Curl Machine",
+        "muscle": "Hamstrings",
+        "equipment": "machine",
+        "sets": "4×12",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Lying Leg Curl Machine",
+        "muscle": "Hamstrings",
+        "equipment": "machine",
+        "sets": "4×10",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Nordic Curl",
+        "muscle": "Hamstrings",
+        "equipment": "bodyweight",
+        "sets": "3×6",
+        "difficulty": "Advanced"
+    },
+    {
+        "name": "Dumbbell Calf Raise",
+        "muscle": "Calves",
+        "equipment": "dumbbell",
+        "sets": "5×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Cable Calf Raise",
+        "muscle": "Calves",
+        "equipment": "cable",
+        "sets": "5×20",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Standing Calf Raise Machine",
+        "muscle": "Calves",
+        "equipment": "machine",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Seated Calf Raise Machine",
+        "muscle": "Calves",
+        "equipment": "machine",
+        "sets": "4×15",
+        "difficulty": "Beginner"
+    },
+    {
+        "name": "Bodyweight Calf Raise",
+        "muscle": "Calves",
+        "equipment": "bodyweight",
+        "sets": "5×25",
+        "difficulty": "Beginner"
+    }
+]

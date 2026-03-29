@@ -1,0 +1,44 @@
+[
+    {
+        "id": "egg",
+        "name": "Egg (1 egg)",
+        "protein": 6,
+        "serving": "1 egg"
+    },
+    {
+        "id": "chicken",
+        "name": "Chicken Breast 100g",
+        "protein": 31,
+        "serving": "100g"
+    },
+    {
+        "id": "paneer",
+        "name": "Paneer 100g",
+        "protein": 18,
+        "serving": "100g"
+    },
+    {
+        "id": "milk",
+        "name": "Milk 250ml",
+        "protein": 8,
+        "serving": "250ml"
+    },
+    {
+        "id": "soy",
+        "name": "Soy Chunks 50g",
+        "protein": 26,
+        "serving": "50g"
+    },
+    {
+        "id": "pb",
+        "name": "Peanut Butter 1 tbsp",
+        "protein": 4,
+        "serving": "1 tbsp"
+    },
+    {
+        "id": "dal",
+        "name": "Dal 1 bowl",
+        "protein": 9,
+        "serving": "1 bowl"
+    }
+]
