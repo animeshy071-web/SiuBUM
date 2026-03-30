@@ -8,15 +8,10 @@ const pageVariants = {
   exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: 'easeIn' } },
 };
 
-const lsGet = (key, fallback = null) => {
-  try {
-    const v = localStorage.getItem(key);
-    return v !== null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
-};
-const lsSet = (key, val) => {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch { }
-};
+import { storage } from '../services/storage';
+
+const lsGet = (key, fallback = null) => storage.getObject(key, fallback);
+const lsSet = (key, val) => storage.setObject(key, val);
 
 const todayKey = () => {
   const d = new Date();
@@ -24,6 +19,17 @@ const todayKey = () => {
 };
 
 const dateKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+function Card({ children, className = '', theme }) {
+  return (
+    <div
+      className={`rounded-[2rem] p-5 border mb-4 ${className}`}
+      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function HabitsScreen({ theme, accent }) {
   const sk = todayKey();
@@ -75,15 +81,6 @@ export default function HabitsScreen({ theme, accent }) {
     { key: 'sleep', label: 'Sleep', icon: Moon, unit: 'hrs', goal: habitGoals.sleep, step: 0.5, quickLabel: '+30min', color: '#a78bfa' },
   ];
 
-  const Card = ({ children, className = '' }) => (
-    <div
-      className={`rounded-[2rem] p-5 border mb-4 ${className}`}
-      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
-    >
-      {children}
-    </div>
-  );
-
   return (
     <motion.div
       key="habits-screen"
@@ -102,7 +99,7 @@ export default function HabitsScreen({ theme, accent }) {
       </div>
 
       {/* ━━━━ STREAKS ━━━━ */}
-      <Card>
+      <Card theme={theme}>
         <div className="flex items-center gap-2 mb-4">
           <Flame size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -130,7 +127,7 @@ export default function HabitsScreen({ theme, accent }) {
       </Card>
 
       {/* ━━━━ STEPS & SLEEP TRACKING ━━━━ */}
-      <Card>
+      <Card theme={theme}>
         <div className="flex items-center gap-2 mb-4">
           <Zap size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>

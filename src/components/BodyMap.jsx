@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, X, TrendingUp } from 'lucide-react';
-import { BODY_FRONT, BODY_BACK } from './bodyData.js';
-import EXERCISE_DB from './data/exercises.json';
-import { getExercisePerf } from './performanceStore';
+import { BODY_FRONT, BODY_BACK } from '../bodyData.js';
+import EXERCISE_DB from '../data/exercises.json';
+import { getExercisePerf } from '../performanceStore';
 
 // ─── Equipment keys ───────────────────────────────────────────────────────────
 export const EQUIPMENT_OPTIONS = ['dumbbell', 'cable', 'machine', 'bodyweight'];

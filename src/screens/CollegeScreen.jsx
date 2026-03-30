@@ -12,15 +12,10 @@ const pageVariants = {
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const lsGet = (key, fallback = null) => {
-  try {
-    const v = localStorage.getItem(key);
-    return v !== null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
-};
-const lsSet = (key, val) => {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch { }
-};
+import { storage } from '../services/storage';
+
+const lsGet = (key, fallback = null) => storage.getObject(key, fallback);
+const lsSet = (key, val) => storage.setObject(key, val);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 // ─── Notification helper ──────────────────────────────────────────────────────
@@ -54,7 +49,6 @@ function LectureCard({ lecture, theme, accent, onSwipeLeft, onSwipeRight, isActi
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.8}
       onDragEnd={handleDragEnd}
-      style={{ x, rotate, opacity }}
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.9, opacity: 0 }}
@@ -109,6 +103,17 @@ function LectureCard({ lecture, theme, accent, onSwipeLeft, onSwipeRight, isActi
         ← Swipe to navigate →
       </p>
     </motion.div>
+  );
+}
+
+function Card({ children, className = '', theme }) {
+  return (
+    <div
+      className={`rounded-[2rem] p-5 border mb-4 ${className}`}
+      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -169,15 +174,6 @@ export default function CollegeScreen({ theme, accent }) {
     .filter(l => l.day === selectedDay)
     .sort((a, b) => a.startTime.localeCompare(b.startTime));
 
-  const Card = ({ children, className = '' }) => (
-    <div
-      className={`rounded-[2rem] p-5 border mb-4 ${className}`}
-      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
-    >
-      {children}
-    </div>
-  );
-
   return (
     <motion.div
       key="college-screen"
@@ -225,7 +221,7 @@ export default function CollegeScreen({ theme, accent }) {
 
       {/* ── Lecture Cards (Tinder-style) ── */}
       {selectedDayLectures.length > 0 && (
-        <Card>
+        <Card theme={theme}>
           <p className="text-[9px] uppercase tracking-widest mb-3" style={{ color: theme.textSecondary }}>
             {selectedDay}'s Lectures — Swipe to browse
           </p>
@@ -254,7 +250,7 @@ export default function CollegeScreen({ theme, accent }) {
       )}
 
       {selectedDayLectures.length === 0 && (
-        <Card>
+        <Card theme={theme}>
           <p className="text-xs text-center py-3" style={{ color: theme.textSecondary }}>
             No lectures on {selectedDay}
           </p>
@@ -262,7 +258,7 @@ export default function CollegeScreen({ theme, accent }) {
       )}
 
       {/* ── Full Timetable ── */}
-      <Card>
+      <Card theme={theme}>
         <div className="flex items-center gap-2 mb-3">
           <GraduationCap size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>

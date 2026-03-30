@@ -8,13 +8,9 @@ const pageVariants = {
   exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: 'easeIn' } },
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-const lsGet = (key, fallback = null) => {
-  try {
-    const v = localStorage.getItem(key);
-    return v !== null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
-};
+import { storage } from '../services/storage';
+
+const lsGet = (key, fallback = null) => storage.getObject(key, fallback);
 
 const todayKey = () => {
   const d = new Date();
@@ -22,6 +18,18 @@ const todayKey = () => {
 };
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+function Card({ children, onClick, className = '', theme }) {
+  return (
+    <div
+      onClick={onClick}
+      className={`rounded-[2rem] p-5 border mb-4 ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
+      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function HomeScreen({ theme, accent, name, onNavigate }) {
   // Read current data from localStorage for dashboard display
@@ -34,7 +42,7 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
   const allWorkouts = lsGet('siuRoutineWorkout', {});
   const todayWorkout = allWorkouts[tk] || null;
 
-  const proteinTotal = parseInt(localStorage.getItem('siuProteinTotal') || '0');
+  const proteinTotal = parseInt(storage.getString('siuProteinTotal', '0'));
   const habitGoals = lsGet('siuHabitGoals', { water: 8, protein: 150, steps: 10000, sleep: 7 });
 
   const lectures = lsGet('siuCollegeLectures', []);
@@ -45,16 +53,6 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
     .filter(l => l.day === todayDayName)
     .sort((a, b) => a.startTime.localeCompare(b.startTime))
     .find(l => l.startTime > nowTimeStr) || null;
-
-  const Card = ({ children, onClick, className = '' }) => (
-    <div
-      onClick={onClick}
-      className={`rounded-[2rem] p-5 border mb-4 ${onClick ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''} ${className}`}
-      style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
-    >
-      {children}
-    </div>
-  );
 
   const proteinPct = Math.min((proteinTotal / habitGoals.protein) * 100, 100);
 
@@ -84,7 +82,7 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
       </div>
 
       {/* ── Today's Workout ── */}
-      <Card onClick={() => onNavigate('workout')}>
+      <Card theme={theme} onClick={() => onNavigate('workout')}>
         <div className="flex items-center gap-2 mb-3">
           <Dumbbell size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -99,7 +97,7 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
       </Card>
 
       {/* ── Protein Progress ── */}
-      <Card onClick={() => onNavigate('nutrition')}>
+      <Card theme={theme} onClick={() => onNavigate('nutrition')}>
         <div className="flex items-center gap-2 mb-3">
           <Beef size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -126,7 +124,7 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
       </Card>
 
       {/* ── Next Task ── */}
-      <Card onClick={() => onNavigate('routine')}>
+      <Card theme={theme} onClick={() => onNavigate('routine')}>
         <div className="flex items-center gap-2 mb-3">
           <CheckCircle2 size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -156,7 +154,7 @@ export default function HomeScreen({ theme, accent, name, onNavigate }) {
       </Card>
 
       {/* ── Next Lecture ── */}
-      <Card onClick={() => onNavigate('college')}>
+      <Card theme={theme} onClick={() => onNavigate('college')}>
         <div className="flex items-center gap-2 mb-3">
           <GraduationCap size={16} style={{ color: accent }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>

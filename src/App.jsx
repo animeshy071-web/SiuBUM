@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Activity, Calendar, Check, Dumbbell, Flame, Home, User, Zap, Menu, UtensilsCrossed, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BodyMap, { ALL_MUSCLES, EQUIPMENT_OPTIONS } from './BodyMap';
-import WorkoutScreen from './WorkoutScreen';
-import GymSetupScreen from './GymSetupScreen';
-import RoutineScreen from './RoutineScreen';
+import BodyMap, { ALL_MUSCLES, EQUIPMENT_OPTIONS } from './components/BodyMap';
+import WorkoutScreen from './screens/WorkoutScreen';
+import GymSetupScreen from './screens/GymSetupScreen';
+import RoutineScreen from './screens/RoutineScreen';
 import HomeScreen from './screens/HomeScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import HabitsScreen from './screens/HabitsScreen';
 import CollegeScreen from './screens/CollegeScreen';
 import HamburgerMenu from './components/HamburgerMenu';
-
-// ─── Helpers ────────────────────────────────────────────────────────────────
-const ls = (key, fallback = null) => {
-  try { const v = localStorage.getItem(key); return v !== null ? v : fallback; }
-  catch { return fallback; }
-};
+import { useUserSession } from './hooks/useUserSession';
+import { useWorkoutSession } from './hooks/useWorkoutSession';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CENTRALIZED THEME CONFIGURATION
@@ -64,19 +60,6 @@ const pageVariants = {
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
   exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: 'easeIn' } },
-};
-
-
-
-// ─── Read / write appState.user from localStorage ────────────────────────────
-const readUser = () => {
-  try {
-    const raw = localStorage.getItem('siuUser');
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
-};
-const writeUser = (user) => {
-  try { localStorage.setItem('siuUser', JSON.stringify(user)); } catch { }
 };
 
 // ─── Login Screen ─────────────────────────────────────────────────────────────
@@ -175,88 +158,22 @@ function LoginScreen({ onLogin, theme, accent, activeTheme, onThemeChange }) {
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
-  // ── Theme ──────────────────────────────────────────────────────────────
-  const [activeTheme, setActiveTheme] = useState(() => ls('siuTheme', 'ben10'));
+  const { activeTheme, setActiveTheme, user, name, isLoggedIn, handleLogin } = useUserSession();
   const theme = THEMES[activeTheme] ?? THEMES.ben10;
+  const accent = theme.primary;
 
-  // ── User ───────────────────────────────────────────────────────────────
-  const [user, setUser] = useState(() => readUser());
-  const name = user?.name ?? '';
-
-  // ── App state ──────────────────────────────────────────────────────────
-  const [selectedMuscle, setSelectedMuscle] = useState(() => ls('siuMuscle', 'Chest'));
-  const [selectedEquipment, setSelectedEquipment] = useState(() => ls('siuEquip', null));
-  const [customExercises, setCustomExercises] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('siuCustomEx') || '[]'); } catch { return []; }
-  });
-
-  // ── Workout Session State ──────────────────────────────────────────────
-  const [workoutSession, setWorkoutSession] = useState([]);
-  const [isWorkoutActive, setIsWorkoutActive] = useState(false);
-  // gymSetup: null | sessionConfig object (between queue and active workout)
-  const [gymSetup, setGymSetup] = useState(null);
-  const [sessionConfig, setSessionConfig] = useState(null);
+  const {
+    selectedMuscle, setSelectedMuscle,
+    selectedEquipment, toggleEquip,
+    customExercises, handleAddCustom, handleRemoveCustom,
+    workoutSession, handleAddToWorkout,
+    isWorkoutActive, gymSetup, sessionConfig,
+    startWorkout, confirmSetup, cancelSetup, finishWorkout,
+  } = useWorkoutSession();
 
   // ── Navigation & Menu ──────────────────────────────────────────────────
   const [currentTab, setCurrentTab] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // ── Sync to localStorage ──────────────────────────────────────────────
-  useEffect(() => { localStorage.setItem('siuTheme', activeTheme); }, [activeTheme]);
-  useEffect(() => { localStorage.setItem('siuMuscle', selectedMuscle); }, [selectedMuscle]);
-  useEffect(() => { localStorage.setItem('siuEquip', selectedEquipment || ''); }, [selectedEquipment]);
-  useEffect(() => { localStorage.setItem('siuCustomEx', JSON.stringify(customExercises)); }, [customExercises]);
-
-  // ── Login handler ─────────────────────────────────────────────────────
-  const handleLogin = (userData) => {
-    writeUser(userData);
-    setUser(userData);
-  };
-
-
-
-  // ── Equipment toggle ──────────────────────────────────────────────────
-  const toggleEquip = useCallback((e) =>
-    setSelectedEquipment(prev => prev === e ? null : e), []);
-
-  // ── Custom exercise handlers ──────────────────────────────────────────
-  const handleAddCustom = useCallback((ex) => setCustomExercises(prev => [...prev, ex]), []);
-  const handleRemoveCustom = useCallback((ex) =>
-    setCustomExercises(prev => prev.filter(x => !(x.name === ex.name && x.muscle === ex.muscle && x.equipment === ex.equipment))), []);
-
-  // ── Workout handlers ──────────────────────────────────────────────────
-  const handleAddToWorkout = useCallback((ex) => {
-    setWorkoutSession(prev => [...prev, ex]);
-  }, []);
-
-  // Step 1: open setup screen
-  const startWorkout = () => {
-    if (workoutSession.length > 0) setGymSetup(true);
-  };
-
-  // Step 2: user confirms setup → begin active workout
-  const confirmSetup = (config) => {
-    setSessionConfig(config);
-    setGymSetup(null);
-    setIsWorkoutActive(true);
-  };
-
-  // Cancel setup → go back to queue
-  const cancelSetup = () => {
-    setGymSetup(null);
-  };
-
-  const finishWorkout = () => {
-    setIsWorkoutActive(false);
-    setSessionConfig(null);
-    setWorkoutSession([]);
-  };
-
-  // ── Active accent ──────────────────────────────────────────────────────
-  const accent = theme.primary;
-
-  // ── Auth gate ──────────────────────────────────────────────────────────
-  const isLoggedIn = user !== null;
 
   return (
     <div

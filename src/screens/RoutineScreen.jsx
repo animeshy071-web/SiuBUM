@@ -7,15 +7,10 @@ import {
 } from 'lucide-react';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const lsGet = (key, fallback = null) => {
-    try {
-        const v = localStorage.getItem(key);
-        return v !== null ? JSON.parse(v) : fallback;
-    } catch { return fallback; }
-};
-const lsSet = (key, val) => {
-    try { localStorage.setItem(key, JSON.stringify(val)); } catch { }
-};
+import { storage } from '../services/storage';
+
+const lsGet = (key, fallback = null) => storage.getObject(key, fallback);
+const lsSet = (key, val) => storage.setObject(key, val);
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = [
@@ -111,6 +106,17 @@ function MonthCalendar({ selectedDate, onSelect, theme, accent, tasksByDate }) {
                     );
                 })}
             </div>
+        </div>
+    );
+}
+
+function Card({ children, className = '', theme }) {
+    return (
+        <div
+            className={`rounded-[2rem] p-5 border mb-4 ${className}`}
+            style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
+        >
+            {children}
         </div>
     );
 }
@@ -223,16 +229,6 @@ export default function RoutineScreen({ theme, accent }) {
         });
     };
 
-    // ── Card wrapper ────────────────────────────────────────────────────────
-    const Card = ({ children, className = '' }) => (
-        <div
-            className={`rounded-[2rem] p-5 border mb-4 ${className}`}
-            style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
-        >
-            {children}
-        </div>
-    );
-
     return (
         <motion.div
             key="routine-screen"
@@ -250,7 +246,7 @@ export default function RoutineScreen({ theme, accent }) {
             </div>
 
             {/* ━━━━ CALENDAR ━━━━ */}
-            <Card>
+            <Card theme={theme}>
                 <MonthCalendar
                     selectedDate={selectedDate}
                     onSelect={setSelectedDate}
@@ -266,7 +262,7 @@ export default function RoutineScreen({ theme, accent }) {
             </p>
 
             {/* ━━━━ DAILY TASKS ━━━━ */}
-            <Card>
+            <Card theme={theme}>
                 <div className="flex items-center gap-2 mb-3">
                     <CheckCircle2 size={16} style={{ color: accent }} />
                     <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -393,7 +389,7 @@ export default function RoutineScreen({ theme, accent }) {
             </Card>
 
             {/* ━━━━ WORKOUT ATTACHMENT ━━━━ */}
-            <Card>
+            <Card theme={theme}>
                 <div className="flex items-center gap-2 mb-3">
                     <Dumbbell size={16} style={{ color: accent }} />
                     <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>
@@ -449,7 +445,7 @@ export default function RoutineScreen({ theme, accent }) {
             </Card>
 
             {/* ━━━━ DAILY NOTES ━━━━ */}
-            <Card>
+            <Card theme={theme}>
                 <div className="flex items-center gap-2 mb-3">
                     <StickyNote size={16} style={{ color: accent }} />
                     <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>

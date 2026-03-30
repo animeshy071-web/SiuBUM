@@ -2,15 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Palette, Target, Droplets, Beef, Footprints, Moon } from 'lucide-react';
 
-const lsGet = (key, fallback = null) => {
-  try {
-    const v = localStorage.getItem(key);
-    return v !== null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
-};
-const lsSet = (key, val) => {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch { }
-};
+import { storage } from '../services/storage';
+
+const lsGet = (key, fallback = null) => storage.getObject(key, fallback);
+const lsSet = (key, val) => storage.setObject(key, val);
 
 const DEFAULT_GOALS = { water: 8, protein: 150, steps: 10000, sleep: 7 };
 

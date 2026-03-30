@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Beef, Droplets, Flame } from 'lucide-react';
-import FOODS_DB from '../data/foods.json';
+import { useNutrition } from '../hooks/useNutrition';
 
 const pageVariants = {
   initial: { opacity: 0, y: 24 },
@@ -9,73 +9,8 @@ const pageVariants = {
   exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: 'easeIn' } },
 };
 
-const lsGet = (key, fallback = null) => {
-  try {
-    const v = localStorage.getItem(key);
-    return v !== null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
-};
-const lsSet = (key, val) => {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch { }
-};
-
-const todayKey = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-};
-
-export default function NutritionScreen({ theme, accent }) {
-  // ── Protein / Food state ───────────────────────────────────────────────
-  const [dailyProteinTotal, setDailyProteinTotal] = useState(() => parseInt(localStorage.getItem('siuProteinTotal') || '0'));
-  const [foodEntries, setFoodEntries] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('siuFoodEntries') || '[]'); } catch { return []; }
-  });
-  const [selectedFoodId, setSelectedFoodId] = useState('');
-
-  // ── Water state ────────────────────────────────────────────────────────
-  const [allHabits, setAllHabits] = useState(() => lsGet('siuRoutineHabits', {}));
-  const sk = todayKey();
-  const habits = allHabits[sk] || { water: 0, protein: 0, steps: 0, sleep: 0 };
-  const habitGoals = lsGet('siuHabitGoals', { water: 8, protein: 150, steps: 10000, sleep: 7 });
-
-  // ── Persist ────────────────────────────────────────────────────────────
-  useEffect(() => {
-    localStorage.setItem('siuProteinTotal', String(dailyProteinTotal));
-    localStorage.setItem('siuFoodEntries', JSON.stringify(foodEntries));
-  }, [dailyProteinTotal, foodEntries]);
-
-  useEffect(() => { lsSet('siuRoutineHabits', allHabits); }, [allHabits]);
-
-  // ── Food handlers ─────────────────────────────────────────────────────
-  const handleAddFood = () => {
-    if (!selectedFoodId) return;
-    const food = FOODS_DB.find(f => f.id === selectedFoodId);
-    if (food) {
-      setFoodEntries(prev => [...prev, food]);
-      setDailyProteinTotal(prev => prev + food.protein);
-      setSelectedFoodId('');
-    }
-  };
-
-  const handleResetFood = () => {
-    setFoodEntries([]);
-    setDailyProteinTotal(0);
-  };
-
-  // ── Water handlers ────────────────────────────────────────────────────
-  const updateWater = (delta) => {
-    setAllHabits(prev => {
-      const current = prev[sk] || { water: 0, protein: 0, steps: 0, sleep: 0 };
-      const newVal = Math.max(0, (current.water || 0) + delta);
-      return { ...prev, [sk]: { ...current, water: newVal } };
-    });
-  };
-
-  const waterVal = habits.water || 0;
-  const waterPct = Math.min((waterVal / habitGoals.water) * 100, 100);
-  const proteinPct = Math.min((dailyProteinTotal / habitGoals.protein) * 100, 100);
-
-  const Card = ({ children, className = '' }) => (
+function Card({ children, className = '', theme }) {
+  return (
     <div
       className={`rounded-[2rem] p-5 border mb-4 ${className}`}
       style={{ background: theme.surface, borderColor: `${theme.textPrimary}08` }}
@@ -83,6 +18,23 @@ export default function NutritionScreen({ theme, accent }) {
       {children}
     </div>
   );
+}
+
+export default function NutritionScreen({ theme, accent }) {
+  const {
+    dailyProteinTotal,
+    foodEntries,
+    selectedFoodId,
+    setSelectedFoodId,
+    handleAddFood,
+    handleResetFood,
+    updateWater,
+    waterVal,
+    waterPct,
+    proteinPct,
+    habitGoals,
+    FOODS_DB,
+  } = useNutrition();
 
   return (
     <motion.div
@@ -102,7 +54,7 @@ export default function NutritionScreen({ theme, accent }) {
       </div>
 
       {/* ━━━━ PROTEIN TRACKER ━━━━ */}
-      <Card>
+      <Card theme={theme}>
         <div className="flex flex-col md:flex-row gap-8 items-start mb-6">
           {/* Left side: Stats & Progress */}
           <div className="flex-1 w-full">
@@ -192,7 +144,7 @@ export default function NutritionScreen({ theme, accent }) {
       </Card>
 
       {/* ━━━━ WATER TRACKER ━━━━ */}
-      <Card>
+      <Card theme={theme}>
         <div className="flex items-center gap-2 mb-4">
           <Droplets size={16} style={{ color: '#38bdf8' }} />
           <span className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: theme.textSecondary }}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Dumbbell, ChevronRight } from 'lucide-react';
-import { getExercisePerf } from './performanceStore';
+import { getExercisePerf } from '../performanceStore';
 
 const REST_PRESETS = [30, 45, 60, 90, 120];
 

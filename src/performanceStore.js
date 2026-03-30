@@ -2,21 +2,16 @@
 // Persists per-exercise performance data in localStorage under key 'siuExercisePerf'.
 // Shape: { [exerciseName]: { maxWeight: number, lastWeight: number, sets: number[] } }
 
+import { storage } from './services/storage';
+
 const STORAGE_KEY = 'siuExercisePerf';
 
 function readAll() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return storage.getObject(STORAGE_KEY, {});
 }
 
 function writeAll(data) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch { /* quota exceeded — silently fail */ }
+  storage.setObject(STORAGE_KEY, data);
 }
 
 /**

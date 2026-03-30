@@ -1,86 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Clock, Trophy, ChevronDown, ChevronUp } from 'lucide-react';
-import { updateExercisePerf } from './performanceStore';
+import { useActiveWorkout } from '../hooks/useActiveWorkout';
 
 export default function WorkoutScreen({ workoutSession, sessionConfig, theme, accent, onFinish }) {
-    const restTime = sessionConfig?.restTime ?? 60;
-
-    const [currentExIndex, setCurrentExIndex] = useState(0);
-
-    // Build initial exercises from sessionConfig (which has per-exercise weight, sets, targetReps)
-    const [exercises, setExercises] = useState(() =>
-        workoutSession.map((ex, i) => {
-            const cfg = sessionConfig?.exercises?.[i];
-            const numSets = cfg?.sets ?? parseInt(ex.sets?.split('×')[0] || '3');
-            const targetReps = cfg?.targetReps ?? parseInt(ex.sets?.split('×')[1] || '10');
-            const prefilledWeight = cfg?.weight ? String(cfg.weight) : '';
-            return {
-                ...ex,
-                targetReps,
-                setsData: Array.from({ length: numSets }, () => ({
-                    reps: '',
-                    weight: prefilledWeight,
-                    done: false,
-                })),
-            };
-        })
-    );
-
-    const [restRemaining, setRestRemaining] = useState(0);
-    const [showHistory, setShowHistory] = useState(false);
-
-    // Rest timer countdown
-    useEffect(() => {
-        if (restRemaining <= 0) return;
-        const timer = setInterval(() => {
-            setRestRemaining(prev => prev - 1);
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [restRemaining]);
+    const {
+        exercises, currentExIndex,
+        restRemaining, setRestRemaining,
+        showHistory, setShowHistory,
+        toggleSet, updateSet, handleNext
+    } = useActiveWorkout(workoutSession, sessionConfig, onFinish);
 
     const activeExercise = exercises[currentExIndex];
     const completedSets = activeExercise.setsData.filter(s => s.done);
     const totalSets = activeExercise.setsData.length;
     const isAllDone = completedSets.length === totalSets;
-
-    const toggleSet = (setIndex) => {
-        setExercises(prev => {
-            const copy = [...prev];
-            const activeSet = copy[currentExIndex].setsData[setIndex];
-            const wasDone = activeSet.done;
-            activeSet.done = !wasDone;
-
-            // Auto-start rest timer after completing a set (not on the last set)
-            if (!wasDone && setIndex < copy[currentExIndex].setsData.length - 1) {
-                setRestRemaining(restTime);
-            }
-
-            return copy;
-        });
-    };
-
-    const updateSet = (setIndex, field, value) => {
-        setExercises(prev => {
-            const copy = [...prev];
-            copy[currentExIndex].setsData[setIndex][field] = value;
-            return copy;
-        });
-    };
-
-    const handleNext = () => {
-        // Save performance for current exercise
-        const current = exercises[currentExIndex];
-        updateExercisePerf(current.name, current.setsData);
-
-        if (currentExIndex < exercises.length - 1) {
-            setCurrentExIndex(prev => prev + 1);
-            setRestRemaining(0);
-            setShowHistory(false);
-        } else {
-            onFinish();
-        }
-    };
 
     // Progress bar across all exercises
     const totalExercises = exercises.length;
