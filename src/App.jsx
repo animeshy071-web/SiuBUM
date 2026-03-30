@@ -3,6 +3,7 @@ import { Activity, Calendar, Check, Dumbbell, Flame, Home, User, Zap, Menu, Uten
 import { motion, AnimatePresence } from 'framer-motion';
 import BodyMap, { ALL_MUSCLES, EQUIPMENT_OPTIONS } from './BodyMap';
 import WorkoutScreen from './WorkoutScreen';
+import GymSetupScreen from './GymSetupScreen';
 import RoutineScreen from './RoutineScreen';
 import HomeScreen from './screens/HomeScreen';
 import NutritionScreen from './screens/NutritionScreen';
@@ -192,6 +193,9 @@ export default function App() {
   // ── Workout Session State ──────────────────────────────────────────────
   const [workoutSession, setWorkoutSession] = useState([]);
   const [isWorkoutActive, setIsWorkoutActive] = useState(false);
+  // gymSetup: null | sessionConfig object (between queue and active workout)
+  const [gymSetup, setGymSetup] = useState(null);
+  const [sessionConfig, setSessionConfig] = useState(null);
 
   // ── Navigation & Menu ──────────────────────────────────────────────────
   const [currentTab, setCurrentTab] = useState('home');
@@ -225,12 +229,26 @@ export default function App() {
     setWorkoutSession(prev => [...prev, ex]);
   }, []);
 
+  // Step 1: open setup screen
   const startWorkout = () => {
-    if (workoutSession.length > 0) setIsWorkoutActive(true);
+    if (workoutSession.length > 0) setGymSetup(true);
+  };
+
+  // Step 2: user confirms setup → begin active workout
+  const confirmSetup = (config) => {
+    setSessionConfig(config);
+    setGymSetup(null);
+    setIsWorkoutActive(true);
+  };
+
+  // Cancel setup → go back to queue
+  const cancelSetup = () => {
+    setGymSetup(null);
   };
 
   const finishWorkout = () => {
     setIsWorkoutActive(false);
+    setSessionConfig(null);
     setWorkoutSession([]);
   };
 
@@ -440,11 +458,24 @@ export default function App() {
           />
         )}
 
+        {/* ━━━━━━━━━━━━━━ GYM SETUP SCREEN ━━━━━━━━━━━━━━ */}
+        {isLoggedIn && gymSetup && !isWorkoutActive && (
+          <GymSetupScreen
+            key="gym-setup"
+            workoutSession={workoutSession}
+            theme={theme}
+            accent={accent}
+            onStart={confirmSetup}
+            onCancel={cancelSetup}
+          />
+        )}
+
         {/* ━━━━━━━━━━━━━━ WORKOUT MODE ━━━━━━━━━━━━━━ */}
         {isLoggedIn && isWorkoutActive && (
           <WorkoutScreen
             key="workout-screen"
             workoutSession={workoutSession}
+            sessionConfig={sessionConfig}
             theme={theme}
             accent={accent}
             onFinish={finishWorkout}
@@ -467,7 +498,7 @@ export default function App() {
       />
 
       {/* ── Top Header Bar with Hamburger ── */}
-      {isLoggedIn && !isWorkoutActive && (
+      {isLoggedIn && !isWorkoutActive && !gymSetup && (
         <div className="fixed top-0 left-0 right-0 z-30" style={{ background: `${theme.background}ee`, backdropFilter: 'blur(12px)' }}>
           <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
             <button
@@ -489,7 +520,7 @@ export default function App() {
       )}
 
       {/* ━━━━━━━━━━━━━━ BOTTOM NAVIGATION BAR ━━━━━━━━━━━━━━ */}
-      {isLoggedIn && !isWorkoutActive && (
+      {isLoggedIn && !isWorkoutActive && !gymSetup && (
         <div
           className="fixed bottom-0 left-0 right-0 z-30 border-t"
           style={{ background: theme.surface, borderColor: `${theme.textPrimary}08`, backdropFilter: 'blur(20px)' }}
